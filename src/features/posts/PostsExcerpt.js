@@ -3,7 +3,13 @@ import TimeAgo from './TimeAgo';
 import ReactionButtons from './ReactionButtons';
 import { Link } from 'react-router-dom';
 
-const PostsExcerpt = ({ post }) => {
+import { useSelector } from 'react-redux';
+import { selectPostById } from './postsSlice';
+
+// have to be 'let' for  React.memo
+const PostsExcerpt = ({ postId }) => {
+    const post = useSelector((state) => selectPostById(state, postId));
+
     return (
         <article>
             <h2>{post.title}</h2>
@@ -17,5 +23,8 @@ const PostsExcerpt = ({ post }) => {
         </article>
     );
 };
+
+// // allows to do not render if props that it receive do not change
+// PostsExcerpt = React.memo(PostsExcerpt);
 
 export default PostsExcerpt;
